@@ -279,6 +279,7 @@ label[for='toggle-all'] {
   position: absolute;
   right: 0;
   left: 0;
+  cursor: pointer;
 }
 
 .filters li {
