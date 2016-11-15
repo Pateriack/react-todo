@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
 import Todo from './Todo';
+import { allCompleted } from './App';
 
 class TodoList extends Component {
-    constructor(props) {
-        super(props);
-        this.toggleAll = this.toggleAll.bind(this);
-    }
-
     render() {
         const todos = filterTodos(this.props.todos, this.props.filter).map((todo) =>
             <Todo key={todo.id}
@@ -19,21 +15,13 @@ class TodoList extends Component {
             <section className="main">
                 <input type="checkbox"
                        className="toggle-all"
-                       checked={this.allCompleted()}
-                       onChange={this.toggleAll} />
+                       checked={allCompleted(this.props.todos)}
+                       onChange={this.props.toggleAll} />
                 <ul className="todo-list">
                     {todos}
                 </ul>
             </section>
         );
-    }
-
-    allCompleted() {
-        return this.props.todos.length > 0 && this.props.todos.reduce((result, todo) => todo.completed ? result : false, true);
-    }
-
-    toggleAll(e) {
-        console.log(e.target.value);
     }
 }
 

@@ -11,6 +11,10 @@ const INITIAL_STATE = {
 
 var nextId = 0;
 
+export function allCompleted(todos) {
+    return todos.length > 0 && todos.reduce((result, todo) => todo.completed ? result : false, true);
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +24,7 @@ class App extends Component {
         this.toggleTodo = this.toggleTodo.bind(this);
         this.addTodo = this.addTodo.bind(this);
         this.destroyTodo = this.destroyTodo.bind(this);
+        this.toggleAll = this.toggleAll.bind(this);
     }
 
     render() {
@@ -28,10 +33,13 @@ class App extends Component {
                 <Header addTodo={this.addTodo} />
                 <TodoList {...this.state}
                           toggleTodo={this.toggleTodo}
-                          destroyTodo={this.destroyTodo} />
+                          destroyTodo={this.destroyTodo}
+                          toggleAll={this.toggleAll}
+                />
                 <Footer {...this.state}
                         clearCompleted={this.clearCompleted}
-                        applyFilter={this.applyFilter} />
+                        applyFilter={this.applyFilter}
+                />
             </div>
         )
     }
@@ -62,6 +70,11 @@ class App extends Component {
 
     destroyTodo(id) {
         this.setState({todos: this.state.todos.filter(todo => todo.id !== id)});
+    }
+
+    toggleAll() {
+        let completed = !allCompleted(this.state.todos);
+        this.setState({todos: this.state.todos.map(todo => Object.assign({}, todo, {completed: completed}))});
     }
 }
 
