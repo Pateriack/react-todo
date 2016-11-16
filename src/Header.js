@@ -29,6 +29,7 @@ class Header extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.props.addTodo(this.state.value);
+        this.setState({value: ''});
     }
 }
 
